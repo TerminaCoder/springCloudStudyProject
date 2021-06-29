@@ -1,7 +1,20 @@
 spring:
+  application:
+    name: lxf-demo-service
+  # nacos 注册中心
   cloud:
     nacos:
-      config:
-        enabled: false
       discovery:
+        server-addr: 192.168.7.157:18848
+      config:
+        server-addr: ${CONFIG_CENTER_HOST:localhost}:${CONFIG_CENTER_PORT:8848}
+        file-extension: yml
+        #额外的公共配置
+        shared-configs: application.yml
         enabled: false
+    sentinel:
+      filter:
+        enabled: true #默认关闭使用false
+      transport:
+        port: 8080 #作为客户端需要开放的一个端口用于接收规则
+        dashboard: 192.168.7.157:28880 #Sentinel控制台的IP和端口
